@@ -16,8 +16,8 @@ class TransfermarktPlayerTransfers(TransfermarktBase):
     """
 
     player_id: str = None
-    URL: str = "https://www.transfermarkt.com/-/transfers/spieler/{player_id}"
-    URL_TRANSFERS: str = "https://www.transfermarkt.com/ceapi/transferHistory/list/{player_id}"
+    URL: str = "https://www.transfermarkt.de/-/transfers/spieler/{player_id}"
+    URL_TRANSFERS: str = "https://www.transfermarkt.de/ceapi/transferHistory/list/{player_id}"
 
     def __post_init__(self) -> None:
         """Initialize the TransfermarktPlayerTransfers class."""

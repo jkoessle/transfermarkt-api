@@ -18,7 +18,7 @@ class TransfermarktCompetitionSearch(TransfermarktBase):
 
     query: str = None
     URL: str = (
-        "https://www.transfermarkt.com/schnellsuche/ergebnis/schnellsuche?query={query}&Wettbewerb_page={page_number}"
+        "https://www.transfermarkt.de/schnellsuche/ergebnis/schnellsuche?query={query}&Wettbewerb_page={page_number}"
     )
     page_number: int = 1
 

@@ -21,7 +21,7 @@ class TransfermarktPlayerInjuries(TransfermarktBase):
     """
 
     player_id: str = None
-    URL: str = "https://www.transfermarkt.com/player/verletzungen/spieler/{player_id}/plus/1/page/{page_number}"
+    URL: str = "https://www.transfermarkt.de/player/verletzungen/spieler/{player_id}/plus/1/page/{page_number}"
     page_number: int = 1
 
     def __post_init__(self):

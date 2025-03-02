@@ -1,6 +1,6 @@
 # transfermarkt-api
 
-This project provides a lightweight and easy-to-use interface for extracting data from [Transfermarkt](https://www.transfermarkt.com/) 
+This project provides a lightweight and easy-to-use interface for extracting data from [Transfermarkt](https://www.transfermarkt.de/) 
 by applying web scraping processes and offering a RESTful API service via FastAPI. With this service, developers can 
 seamlessly integrate Transfermarkt data into their applications, websites, or data analysis pipelines.
 

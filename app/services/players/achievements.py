@@ -18,7 +18,7 @@ class TransfermarktPlayerAchievements(TransfermarktBase):
     """
 
     player_id: str = None
-    URL: str = "https://www.transfermarkt.com/-/erfolge/spieler/{player_id}"
+    URL: str = "https://www.transfermarkt.de/-/erfolge/spieler/{player_id}"
 
     def __post_init__(self):
         """Initialize the TransfermarktPlayerAchievements class."""
