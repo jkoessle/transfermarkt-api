@@ -1,3 +1,5 @@
+import re
+import locale
 from datetime import datetime
 from typing import Optional
 
@@ -54,19 +56,36 @@ class TransfermarktBaseModel(BaseModel):
         check_fields=False,
     )
     def parse_str_to_int(cls, v: str) -> Optional[int]:
+        locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
         if not v or not any(char.isdigit() for char in v):
             return None
+
+        # Remove unwanted characters and normalize the string
         value_str = v.lower().replace("€", "").replace("+", "").replace("'", "").strip()
-        if "k" in value_str:
-            return int(float(value_str.replace("k", "")) * 1_000)
-        elif "m" in value_str:
-            return int(float(value_str.replace("m", "")) * 1_000_000)
-        elif "bn" in value_str:
-            return int(float(value_str.replace("bn", "")) * 1_000_000_000)
-        elif "b" in value_str:
-            return int(float(value_str.replace("b", "")) * 1_000_000_000)
+
+        # Regular expression to extract the first occurrence of a German-formatted number
+        match = re.search(r'\b\d{1,3}(?:\.\d{3})*,\d{2}\b', value_str)
+        if match:
+            number_str = match.group()
+            number_float = locale.atof(number_str)
         else:
-            return int(float(value_str))
+            match = re.search(r'\b\d+(\.\d+)?\b', value_str)
+            if match:
+                number_str = match.group()
+                number_float = float(number_str)
+            else:
+                return None
+            
+        if "tsd." in value_str:
+            return int(float(number_float) * 1_000)
+        elif "mio." in value_str:
+            return int(float(number_float) * 1_000_000)
+        elif "mrd." in value_str:
+            return int(float(number_float) * 1_000_000_000)
+        elif "bill." in value_str:
+            return int(float(number_float) * 1_000_000_000)
+        else:
+            return int(float(number_float))
 
     @field_validator("height", mode="before", check_fields=False)
     def parse_height(cls, v: str) -> Optional[int]:
@@ -78,3 +97,24 @@ class TransfermarktBaseModel(BaseModel):
     def parse_days(cls, v: str) -> Optional[int]:
         days = "".join(filter(str.isdigit, v))
         return int(days) if days else None
+    
+    def parse_german_number(v: str):
+        locale.setlocale(locale.LC_ALL, 'de_DE.UTF-8')
+        if not v or not any(char.isdigit() for char in v):
+            return None
+
+        # Remove unwanted characters and normalize the string
+        value_str = v.lower().replace("€", "").replace("+", "").replace("'", "").strip()
+
+        # Regular expression to extract the first occurrence of a German-formatted number
+        match = re.search(r'\b\d{1,3}(?:\.\d{3})*,\d{2}\b', value_str)
+        if match:
+            number_str = match.group()
+            number_float = locale.atof(number_str)
+        else:
+            match = re.search(r'\b\d+(\.\d+)?\b', value_str)
+            if match:
+                number_str = match.group()
+                number_float = float(number_str)
+            else:
+                return None
